@@ -22,8 +22,9 @@ def translation():
 
 def choice(event):
     global lang, language
-    lang = combobox.get()[0:combobox.get().find(' ')]
-    language = combobox.get()[combobox.get().find(' - ') + 3:]
+    res = combobox.get()
+    lang = res[0:res.find(' ')]
+    language = res[res.find(' - ') + 3:]
 
 
 def clear():
