@@ -1,6 +1,8 @@
 from tkinter import *
 from googletrans import Translator, constants
 from tkinter import ttk
+import requests
+
 
 win = Tk()
 win.title("Translator")
@@ -11,20 +13,21 @@ win.geometry('253x215')
 def translation():
     global lang
     word = entry.get()
-    translator = Translator(service_urls=['translate.google.com'])
     try:
+        translator = Translator(service_urls=['translate.google.com'])
         translation1 = translator.translate(word, dest=lang)
     except ValueError:
         Result.insert(1.0, f'Choose language!!!\n')
+    except requests.exceptions.ConnectionError:
+        Result.insert(1.0, f'Connection error\n')
     else:
         Result.insert(1.0, f'Translated In {language} : {translation1.text}\n')
 
 
 def choice(event):
     global lang, language
-    res = combobox.get()
-    lang = res[0:res.find(' ')]
-    language = res[res.find(' - ') + 3:]
+    lang = combobox.get()[0:combobox.get().find(' ')]
+    language = combobox.get()[combobox.get().find(' - ') + 3:]
 
 
 def clear():
